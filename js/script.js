@@ -1,19 +1,39 @@
-let createTodo = function(todo) {
-    let li = document.createElement('li');
+let createTodo = function(todo)  {
+    let li = document.createElement('li');
   
-    let chk = document.createElement('input');
-    chk.setAttribute('type', 'checkbox');
+    let label = document.createElement('label');
+    label.innerHTML = todo;
+    
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.onclick = function() {
+        this.parentNode.classList.toggle('checked');
+    }
   
-    let label = document.createElement('label');
-    label.innerHTML = todo;
+    let deleteButton = document.createElement('button');
+    deleteButton.innerHTML = "Delete";
+    deleteButton.className = "delete";
+    deleteButton.onclick = function() {
+        this.parentNode.remove();
+    }
   
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Delete';
-    btn.classList.add('delete');
-    
-    li.appendChild(chk);
-    li.appendChild(label);
-    li.appendChild(btn);
+    li.appendChild(checkbox); 
+    li.appendChild(label);
+    li.appendChild(deleteButton);
+    document.querySelector('#todoList').appendChild(li);
+}
   
-    return li;
-  }
+let addButton = document.getElementById('add');
+  
+addButton.onclick = function() {
+    let parentX = this.parentNode;
+    let inputText = parentX.children[0];
+    if(inputText.value === '')
+    {
+        return;
+    }
+    else{
+        createTodo(inputText.value);
+        inputText.value = '';
+    }
+}
